@@ -1,0 +1,137 @@
+:root {
+    --bg-color: #7d99b3;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+#board {
+    bottom: 0;
+    left: 0;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+}
+
+#board::-webkit-scrollbar-button {
+    display: block;
+    height: 4px;
+    width: 4px;
+}
+
+#board::-webkit-scrollbar-track-piece {
+    background: #00000026;
+}
+
+.u-fancy-scrollbar::-webkit-scrollbar-track-piece {
+    background: #091e4214;
+}
+
+.column {
+    background-color: var(--ds-background-accent-gray-subtlest,#ebecf0);
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    position: relative;
+    white-space: normal;
+    width: 100%!important;
+}
+
+.list-wrapper {
+    box-sizing: border-box;
+    display: inline-block;
+    height: 100%;
+    margin: 0 4px;
+    vertical-align: top;
+    white-space: nowrap;
+    width: 272px;
+}
+
+.column-header{
+    flex: 0 0 auto;
+    min-height: 20px;
+    padding: 10px 8px;
+    position: relative;
+    padding-right: 36px;
+}
+
+.column-body{
+    flex: 0 0 auto;
+    min-height: 20px;
+    padding: 10px 8px;
+    position: relative;
+    padding-right: 36px;
+}
+
+.list-name {
+        background: #0000;
+    border-radius: 3px;
+    box-shadow: none;
+    font-weight: 600;
+    height: 20px;
+    margin: -4px 0;
+    max-height: 256px;
+    min-height: 20px;
+    padding: 4px 8px;
+    resize: none;
+    width: 100%;
+}
+
+h2 {
+    font-weight: 600;
+    margin: 0 0 8px;
+        font-size: 20px;
+    line-height: 24px;
+        display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.card {
+    cursor: pointer;
+    background-color: var(--ds-surface-raised,#fff);
+    border-radius: 3px;
+    box-shadow: var(--ds-shadow-raised,0 1px 0 #091e4240);
+    color: var(--ds-text,inherit);
+    cursor: pointer;
+    display: block;
+    margin-bottom: 8px;
+    width: 240px;
+    height: 20px;
+    position: relative;
+    z-index: 0;
+}
+
+.column_add_task {
+    padding: 10px 8px;
+    background-color: var(--ds-background-accent-gray-subtlest,#ebecf0);
+}
+
+.dragging {
+    transform: scale(1.05);
+    transform: rotate(3deg);
+}

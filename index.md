@@ -26,6 +26,7 @@ Dabei werde automatisch die Tags angepasst.
 - mySql
 - php server
 - webserver
+- `composer require 'davidbadura/taskwarrior'` task warrior php lib
 
 # Problems:
 
@@ -47,3 +48,4 @@ $('#myShutdownButton').click(){
     }
 }
 ```
+
