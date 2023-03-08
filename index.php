@@ -26,8 +26,11 @@
                 $counter++;
                 $name = strtok($line, " ");
                 $filter = substr(strstr($line, " "), 1);
-
-                $exec = "task $filter export";
+                if (preg_match("/q./", $filter)) {
+                    $exec = "task export $filter";
+                } else {
+                    $exec = "task $filter export";
+                }
                 $string = trim(preg_replace('/\s+/', ' ', $exec));
                 $task = json_decode(shell_exec($string));
                 if ($task == "") {
