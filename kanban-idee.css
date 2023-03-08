@@ -55,6 +55,7 @@ body {
     position: relative;
     white-space: normal;
     width: 100%!important;
+    overflow-y: scroll;
 }
 
 .list-wrapper {
@@ -124,6 +125,12 @@ h2 {
     height: 20px;
     position: relative;
     z-index: 0;
+}
+
+.card-body p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .column_add_task {

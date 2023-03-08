@@ -1,3 +1,25 @@
+function addEvent(obj, evt, fn) {
+    if (obj.addEventListener) {
+        obj.addEventListener(evt, fn, false);
+    }
+    else if (obj.attachEvent) {
+        obj.attachEvent("on" + evt, fn);
+    }
+}
+
+var mousisDown = false;
+addEvent(window, "load", function(e) {
+    addEvent(document, "mouseout", function(e) {
+        e = e ? e : window.event;
+        var from = e.relatedTarget || e.toElement;
+        if (!from || from.nodeName == "HTML") {
+            // stop your drag event here
+            // for now we can just use an alert
+            console.log("mouse out")
+            mousisDown = true
+        }
+    });
+});
 let isDragging = false;
 
 var tasks = 6;
@@ -28,6 +50,7 @@ document.addEventListener('mousedown', function(event) {
 
     function onMouseUp(event) {
         finishDrag();
+        mousisDown = false
     };
 
     function onMouseMove(event) {
@@ -50,10 +73,21 @@ document.addEventListener('mousedown', function(event) {
         // potential droppables are labeled with the class "droppable" (can be other logic)
         let droppableBelow = elemBelow.closest('.droppable');
 
-            // we're flying in or out...
-                // note: both values can be null
-            //   currentDroppable=null if we were not over a droppable before this event (e.g over an empty space)
-            //   droppableBelow=null if we're not over a droppable now, during this event
+        // we're flying in or out...
+        // note: both values can be null
+        //   currentDroppable=null if we were not over a droppable before this event (e.g over an empty space)
+        //   droppableBelow=null if we're not over a droppable now, during this event
+
+        if (mousisDown) {
+            console.log("if")
+            finishDrag();
+            mousisDown = false
+        }
+        onmouseup = (event) => {
+            console.log("mouse")
+            finishDrag();
+            mousisDown = false
+        };
 
         if (currentDroppable) {
             // the logic to process "flying out" of the droppable (remove highlight)
@@ -83,7 +117,7 @@ document.addEventListener('mousedown', function(event) {
     //   remember the initial shift
     //   move the element position:fixed and a direct child of body
     function startDrag(element, clientX, clientY) {
-        if(isDragging) {
+        if (isDragging) {
             return;
         }
 
@@ -96,19 +130,17 @@ document.addEventListener('mousedown', function(event) {
         shiftX = clientX - element.getBoundingClientRect().left;
         shiftY = clientY - element.getBoundingClientRect().top;
 
-      element.style.position = 'absolute';
-      element.style.zIndex = 1000;
+        element.style.position = 'absolute';
+        element.style.zIndex = 1000;
         element.classList.add('dragging');
-      document.body.append(element);
+        document.body.append(element);
 
         moveAt(clientX, clientY);
     };
 
     // switch to absolute coordinates at the end, to fix the element in the document
     function finishDrag() {
-        if(!isDragging) {
-            return;
-        }
+        console.log("finish")
         var e = window.event;
 
         var posX = e.clientX;
@@ -122,15 +154,15 @@ document.addEventListener('mousedown', function(event) {
         // potential droppables are labeled with the class "droppable" (can be other logic)
         let droppableBelow = elemBelow.closest('.droppable');
 
-            // we're flying in or out...
-                // note: both values can be null
-            //   currentDroppable=null if we were not over a droppable before this event (e.g over an empty space)
-            //   droppableBelow=null if we're not over a droppable now, during this event
+        // we're flying in or out...
+        // note: both values can be null
+        //   currentDroppable=null if we were not over a droppable before this event (e.g over an empty space)
+        //   droppableBelow=null if we're not over a droppable now, during this event
 
+        $("#placeholder").remove();
         if (currentDroppable) {
             // the logic to process "flying out" of the droppable (remove highlight)
             $(currentDroppable).children(".column").children(".column-body").append(dragElement);
-            $("#placeholder").remove();
         } else {
             father.appendChild(dragElement);
             leaveDroppable(father);
@@ -170,7 +202,7 @@ document.addEventListener('mousedown', function(event) {
 
             // a swift mouse move make put the cursor beyond the document end
             // if that happens -
-                // limit the new Y by the maximally possible (right at the bottom of the document)
+            // limit the new Y by the maximally possible (right at the bottom of the document)
             newY = Math.min(newY, document.documentElement.clientHeight - dragElement.offsetHeight);
         }
 
@@ -210,14 +242,14 @@ function addTask(id) {
     $("#" + id).children(".column-body").append(newTask);
 }
 
- $('.add_task_btn').click(function(e){
+$('.add_task_btn').click(function(e) {
     tasks++;
-     let id = $(this).parent().parent().attr('id');
+    let id = $(this).parent().parent().attr('id');
     var task = document.getElementById(id);
     let newTask = document.createElement('div');
     newTask.className = 'card draggable';
     newTask.id = 'card_' + id;
     newTask.innerHTML = "<div class='card-body'><p>Card " + tasks + "</p></div>";
-     $(this).parent().parent().children(".column-body").append(newTask);
-      //parent() because i think you want to change the class of the div ...
- });
+    $(this).parent().parent().children(".column-body").append(newTask);
+    //parent() because i think you want to change the class of the div ...
+});
